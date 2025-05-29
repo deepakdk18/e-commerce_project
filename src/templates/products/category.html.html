@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/navbar :: head">
+    <title>Category Products</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/products}">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${category.name}">Category</li>
+        </ol>
+    </nav>
+
+    <h2 th:text="${category.name + ' Products'}">Category Products</h2>
+    
+    <div class="row">
+        <div th:each="product : ${products}" class="col-md-4 mb-4">
+            <div class="card product-card h-100">
+                <img th:src="@{${product.imageUrl ?: '/images/products/default.png'}}" 
+                     class="card-img-top product-img" alt="Product Image">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+                    <p class="card-text" th:text="${product.description}">Product description</p>
+                    <div class="mt-auto">
+                        <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}">$0.00</p>
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/products/detail/} + ${product.id}" class="btn btn-sm btn-primary">Details</a>
+                            <form th:action="@{/cart/add/} + ${product.id}" method="post">
+                                <button type="submit" class="btn btn-sm btn-success">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

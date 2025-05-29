@@ -1,0 +1,87 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --danger-color: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 56px;
+}
+
+.navbar {
+    background-color: var(--dark-color) !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/images/hero-bg.jpg');
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+    margin-bottom: 30px;
+}
+
+.product-card {
+    transition: transform 0.3s;
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-img {
+    height: 200px;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.price {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+.error-container {
+    text-align: center;
+    padding: 100px 0;
+}
+
+/* Cart styles */
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+}

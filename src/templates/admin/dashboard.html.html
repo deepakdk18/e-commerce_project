@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: layout(~{::title}, ~{::section}, ~{::link}, ~{::script})}">
+<head>
+    <title>Admin Dashboard</title>
+    
+    <!-- Dashboard-specific CSS -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet" th:remove="tag">
+</head>
+<body>
+    <section>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h1>
+            <div class="text-muted" sec:authentication="name"></div>
+        </div>
+
+        <div class="row">
+            <!-- Stats Cards -->
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total Products</h6>
+                                <h2 th:text="${stats.productCount}">0</h2>
+                            </div>
+                            <i class="fas fa-box-open fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total Orders</h6>
+                                <h2 th:text="${stats.orderCount}">0</h2>
+                            </div>
+                            <i class="fas fa-shopping-cart fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total Users</h6>
+                                <h2 th:text="${stats.userCount}">0</h2>
+                            </div>
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Revenue</h6>
+                                <h2 th:text="'$' + ${#numbers.formatDecimal(stats.revenue, 1, 2)}">$0.00</h2>
+                            </div>
+                            <i class="fas fa-dollar-sign fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Recent Orders -->
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Recent Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="order : ${recentOrders}">
+                                        <td><a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.id}"></a></td>
+                                        <td th:text="${order.user.email}"></td>
+                                        <td th:text="${#temporals.format(order.createdAt, 'MMM dd, yyyy')}"></td>
+                                        <td th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 1, 2)}"></td>
+                                        <td>
+                                            <span th:class="${order.status == 'COMPLETED'} ? 'badge bg-success' : 
+                                                           ${order.status == 'PENDING'} ? 'badge bg-warning' : 'badge bg-danger'"
+                                                  th:text="${order.status}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a th:href="@{/admin/orders}" class="btn btn-primary mt-3">View All Orders</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/admin/products/new}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add New Product
+                            </a>
+                            <a th:href="@{/admin/users}" class="btn btn-secondary">
+                                <i class="fas fa-users me-2"></i>Manage Users
+                            </a>
+                            <a th:href="@{/admin/categories}" class="btn btn-info">
+                                <i class="fas fa-tags me-2"></i>Manage Categories
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard-specific JS -->
+    <script th:remove="tag">
+        // Initialize any dashboard-specific JavaScript here
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard loaded');
+        });
+    </script>
+</body>
+</html>

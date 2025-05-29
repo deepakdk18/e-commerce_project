@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/navbar :: head">
+    <title>Order Details</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/orders}">My Orders</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Order Details</li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <h2>Order #<span th:text="${order.id}"></span></h2>
+                <span th:class="${order.status == 'PENDING' ? 'badge bg-warning' : 
+                               order.status == 'DELIVERED' ? 'badge bg-success' : 
+                               'badge bg-info'}" 
+                      th:text="${order.status}"></span>
+            </div>
+            <small class="text-muted" th:text="${#temporals.format(order.createdAt, 'MMM dd, yyyy hh:mm a')}"></small>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Shipping Address</h5>
+                    <p th:text="${order.shippingAddress}"></p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Order Summary</h5>
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span th:text="'$' + ${#numbers.formatDecimal(order.totalAmount - 5, 1, 2)}"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Shipping:</span>
+                        <span>$5.00</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total:</span>
+                        <span th:text="'$' + ${#numbers.formatDecimal(order.totalAmount, 1, 2)}"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <h5>Order Items</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${order.orderItems}">
+                        <td th:text="${item.product.name}">Product Name</td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(item.price, 1, 2)}">$0.00</td>
+                        <td th:text="${item.quantity}">1</td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(item.price * item.quantity, 1, 2)}">$0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:if="${order.status == 'PENDING'}" class="text-end">
+                <a th:href="@{/orders/cancel/} + ${order.id}" 
+                   class="btn btn-danger"
+                   onclick="return confirm('Are you sure you want to cancel this order?')">Cancel Order</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

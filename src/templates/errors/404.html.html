@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Not Found</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-danger">
+            <h1 th:text="'Error ' + ${status}">404 Not Found</h1>
+            <p th:text="${error}">The page you requested could not be found.</p>
+            <a th:href="@{/}" class="btn btn-primary">Return Home</a>
+        </div>
+    </div>
+</body>
+</html>

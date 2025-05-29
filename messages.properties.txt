@@ -1,0 +1,16 @@
+# Validation Messages
+NotEmpty.userRegistrationDto.firstName=First name is required
+NotEmpty.userRegistrationDto.lastName=Last name is required
+Email.userRegistrationDto.email=Please provide a valid email
+Size.userRegistrationDto.password=Password must be at least 6 characters
+NotEmpty.userRegistrationDto.address=Address is required
+NotEmpty.userRegistrationDto.phone=Phone number is required
+
+# Application Messages
+product.add.success=Product added successfully
+product.update.success=Product updated successfully
+product.delete.success=Product deleted successfully
+registration.success=Registration successful! Please login
+login.error=Invalid username or password
+cart.add.success=Product added to cart
+order.success=Order placed successfully

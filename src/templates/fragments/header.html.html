@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle} ?: 'E-Commerce'">E-Commerce</title>
+    
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon">
+    
+    <!-- Font Awesome (optional) -->
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}" 
+          rel="stylesheet" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" 
+          referrerpolicy="no-referrer">
+    
+    <!-- Bootstrap Icons -->
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css}" 
+          rel="stylesheet">
+    
+    <!-- Custom meta tags -->
+    <meta name="description" content="Online e-commerce store built with Spring Boot">
+    <meta name="keywords" content="ecommerce, shopping, spring boot, java">
+    <meta name="author" content="Your Name">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="E-Commerce Store">
+    <meta property="og:description" content="Online shopping platform">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:image" content="/images/logo.png">
+    
+    <!-- Dark mode preference -->
+    <meta name="color-scheme" content="light dark">
+    
+    <!-- Preload important resources -->
+    <link rel="preload" th:href="@{/css/bootstrap.min.css}" as="style">
+    <link rel="preload" th:href="@{/js/bootstrap.bundle.min.js}" as="script">
+    
+    <!-- Thymeleaf fragment for additional header content -->
+    <th:block th:fragment="additional-head"></th:block>
+</head>
+<body>
+    <!-- Navigation will be included from navbar.html -->
+    
+    <!-- Main content placeholder -->
+    <main class="container-fluid px-0">
+        <div th:replace="fragments/navbar :: navbar"></div>
+        
+        <!-- Toast notification container -->
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div th:if="${#request.getParameter('success') != null}" 
+                     class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success text-white">
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Operation completed successfully!
+                    </div>
+                </div>
+                <div th:if="${#request.getParameter('error') != null}" 
+                     class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-danger text-white">
+                        <strong class="me-auto">Error</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <span th:text="${#request.getParameter('error')}">An error occurred</span>
+                    </div>
+                </div>
+            </div>
+        </div>
